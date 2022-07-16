@@ -1,0 +1,8 @@
+apiVersion: labs.linuxtips.io/v1alpha1
+kind: BeerlogDeploy
+metadata:
+  name: beerlog-app
+  namespace: default
+spec:
+  size: 3
+  

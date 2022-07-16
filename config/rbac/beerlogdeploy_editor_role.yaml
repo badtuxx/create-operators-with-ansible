@@ -1,0 +1,24 @@
+# permissions for end users to edit beerlogdeploys.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: beerlogdeploy-editor-role
+rules:
+- apiGroups:
+  - labs.linuxtips.io
+  resources:
+  - beerlogdeploys
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - labs.linuxtips.io
+  resources:
+  - beerlogdeploys/status
+  verbs:
+  - get

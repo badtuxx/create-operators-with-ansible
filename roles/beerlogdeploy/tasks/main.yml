@@ -1,0 +1,38 @@
+---
+# tasks file for BeerlogDeploy
+- name: Start Beerlog App
+  kubernetes.core.k8s:
+    definition:
+      kind: Deployment
+      apiVersion: apps/v1
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-beerlog'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        replicas: '{{ size }}'
+        selector:
+          matchLabels:
+            app: beerlog
+        template:
+          metadata:
+            labels:
+              app: beerlog
+          spec:
+            containers:
+            - name: beerlog
+              image: "linuxtips/beerlog:2.0"
+- name: Create beerlog app service
+  kubernetes.core.k8s:
+    definition:
+      kind: Service
+      apiVersion: v1
+      metadata:
+        name: "{{ ansible_operator_meta.name }}-beerlog"
+        namespace: "{{ ansible_operator_meta.namespace }}"
+      spec:
+        type: NodePort
+        ports:
+        - port: 8000
+          targetPort: 8000
+        selector:
+          app: beerlog
